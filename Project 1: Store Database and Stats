@@ -1,0 +1,36 @@
+/*
+Create your own store!
+Your store should sell one type of things, like clothing or bikes, whatever you want your
+store to specialize in. You should have a table for all the items in your store, and at least 5 columns 
+for the kind of data you think you'd need to store. You should sell at least 15 items, and use select 
+statements to order your items by price and show at least one statistic about the items.
+*/
+ 
+/* Create a store database */ 
+CREATE TABLE store (id INTEGER PRIMARY KEY, item TEXT, quantity INTEGER, price INTEGER, aisle INTEGER);
+
+INSERT INTO store VALUES (1, "Shirts", 12, 15.25, 2);
+INSERT INTO store VALUES (2, "Pants", 10, 28.25, 2);
+INSERT INTO store VALUES (3, "Bucket Hats", 11, 10.75, 1);
+INSERT INTO store VALUES (4, "Sunglasses", 10, 12.25, 1);
+INSERT INTO store VALUES (5, "Socks", 20, 3.75, 3);
+INSERT INTO store VALUES (6, "Sandles", 8, 12.95, 3);
+INSERT INTO store VALUES (7, "Sneakers", 8, 21.89, 3);
+INSERT INTO store VALUES (8, "Gloves", 5, 5.95, 1);
+INSERT INTO store VALUES (9, "Tights", 10, 7.25, 4);
+INSERT INTO store VALUES (10, "Sweatpants", 8, 45.95, 4);
+INSERT INTO store VALUES (11, "Hoddies", 12, 23.41, 5);
+INSERT INTO store VALUES (12, "Dresses", 8, 10.99, 6);
+INSERT INTO store VALUES (13, "Skirts", 7, 5.75, 6);
+INSERT INTO store VALUES (14, "Heels", 8, 21.75, 3);
+INSERT INTO store VALUES (15, "Belts", 10, 5.85, 4);
+
+/* Display the database by price */
+SELECT * FROM store;
+SELECT * FROM store GROUP BY price;
+
+/* What is the total quantity of items in each aisle of the store, and list aisles in order */
+SELECT aisle, SUM(quantity) FROM store Group by aisle;
+
+/* What's the top 5 most expensive item in store */
+SELECT item, price FROM store ORDER BY price desc limit 5;
