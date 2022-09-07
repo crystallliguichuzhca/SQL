@@ -7,30 +7,30 @@ statements to order your items by price and show at least one statistic about th
 */
  
 /* Create a store database */ 
-CREATE TABLE store (id INTEGER PRIMARY KEY, item TEXT, quantity INTEGER, price INTEGER, aisle INTEGER);
+CREATE TABLE store (id INTEGER PRIMARY KEY, item TEXT, section TEXT, price INTEGER, popularity INTEGER);
 
-INSERT INTO store VALUES (1, "Shirts", 12, 15.25, 2);
-INSERT INTO store VALUES (2, "Pants", 10, 28.25, 2);
-INSERT INTO store VALUES (3, "Bucket Hats", 11, 10.75, 1);
-INSERT INTO store VALUES (4, "Sunglasses", 10, 12.25, 1);
-INSERT INTO store VALUES (5, "Socks", 20, 3.75, 3);
-INSERT INTO store VALUES (6, "Sandles", 8, 12.95, 3);
-INSERT INTO store VALUES (7, "Sneakers", 8, 21.89, 3);
-INSERT INTO store VALUES (8, "Gloves", 5, 5.95, 1);
-INSERT INTO store VALUES (9, "Tights", 10, 7.25, 4);
-INSERT INTO store VALUES (10, "Sweatpants", 8, 45.95, 4);
-INSERT INTO store VALUES (11, "Hoddies", 12, 23.41, 5);
-INSERT INTO store VALUES (12, "Dresses", 8, 10.99, 6);
-INSERT INTO store VALUES (13, "Skirts", 7, 5.75, 6);
-INSERT INTO store VALUES (14, "Heels", 8, 21.75, 3);
-INSERT INTO store VALUES (15, "Belts", 10, 5.85, 4);
+INSERT INTO store VALUES (1, "Shirts", "A1", 15.25, 77);
+INSERT INTO store VALUES (2, "Pants", "C1", 28.25, 78);
+INSERT INTO store VALUES (3, "Bucket Hats", "A2", 10.75, 86);
+INSERT INTO store VALUES (4, "Sunglasses", "A2", 12.25, 42);
+INSERT INTO store VALUES (5, "Socks", "C2", 3.75, 89);
+INSERT INTO store VALUES (6, "Sandles", "C2", 12.95, 66);
+INSERT INTO store VALUES (7, "Sneakers", "C2", 21.89, 97);
+INSERT INTO store VALUES (8, "Gloves", "A2", 5.95, 36);
+INSERT INTO store VALUES (9, "Tights", "C2", 7.25, 55);
+INSERT INTO store VALUES (10, "Sweatpants", "C1", 45.95, 77);
+INSERT INTO store VALUES (11, "Hoddies", "B2", 23.41, 87);
+INSERT INTO store VALUES (12, "Dresses", "B1", 10.99, 91);
+INSERT INTO store VALUES (13, "Skirts", "B1", 25.75, 92);
+INSERT INTO store VALUES (14, "Heels", "C2", 21.75, 69);
+INSERT INTO store VALUES (15, "Belts", "C2", 5.85, 36);
 
-/* Display the database by price */
+/* Display the database ordered by price */
 SELECT * FROM store;
 SELECT * FROM store GROUP BY price;
 
-/* What is the total quantity of items in each aisle of the store, and list aisles in order */
-SELECT aisle, SUM(quantity) FROM store Group by aisle;
+/* What's the avg price of items in section C2? */
+SELECT AVG(price) "C2" FROM store;
 
-/* What's the top 5 most expensive item in store */
-SELECT item, price FROM store ORDER BY price desc limit 5;
+/* What's the top 5 most popular item in store and tag it's price along */
+SELECT item, popularity, price FROM store ORDER BY popularity desc limit 5;
