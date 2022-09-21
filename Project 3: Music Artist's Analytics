@@ -1,0 +1,40 @@
+/*2022 Popular Music Artist Data and Stats*/
+CREATE TABLE singers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullname TEXT,
+    age INTEGER,
+    nationality TEXT);
+    
+INSERT INTO singers (fullname, age, nationality) VALUES ("Harry Styles", 28, "British");
+INSERT INTO singers (fullname, age, nationality) VALUES ("Bad Bunny", 28, "US - Puerto Rican");
+INSERT INTO singers (fullname, age, nationality) VALUES ("Selena Gomez", 29, "US");
+INSERT INTO singers (fullname, age, nationality) VALUES ("Kali Uchis",  27, "US - Colombian");
+INSERT INTO singers (fullname, age, nationality) VALUES ("Calvin Harris", 38, "Britsh - Scottish");
+INSERT INTO singers (fullname, age, nationality) VALUES ("Lizzo", 34, "US");
+INSERT INTO singers (fullname, age, nationality) VALUES ("Doja Cat", 26, "US");
+INSERT INTO singers (fullname, age, nationality) VALUES ("Kanye West", 44, "US");
+
+
+CREATE TABLE wealth (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    singer_id INTEGER,
+    net_worth TEXT,
+    recent_albumn TEXT);
+    
+INSERT INTO wealth (singer_id, net_worth, recent_albumn) VALUES (1, "107 million", "Harry's House");
+INSERT INTO wealth (singer_id, net_worth, recent_albumn) VALUES (2, "18 million", "Un Verano Sin Ti");
+INSERT INTO wealth (singer_id, net_worth, recent_albumn) VALUES (3, "85 million", "Let Somebody Go");
+INSERT INTO wealth (singer_id, net_worth, recent_albumn) VALUES (4, "4 million", "Desafinado");
+INSERT INTO wealth (singer_id, net_worth, recent_albumn) VALUES (5, "48.5 million", "Potion");
+INSERT INTO wealth (singer_id, net_worth, recent_albumn) VALUES (6, "12 million", "About Damn Time");
+INSERT INTO wealth (singer_id, net_worth, recent_albumn) VALUES (7, "10 million", "Vegas");
+INSERT INTO wealth (singer_id, net_worth, recent_albumn) VALUES (8, "2 billion", "True Love");
+
+SELECT * from singers;
+SELECT * from wealth;
+
+/*return total net worth for each singer*/
+SELECT singers.fullname, wealth.net_worth
+    FROM singers
+    JOIN wealth
+    ON singers.id = wealth.singer_id;
