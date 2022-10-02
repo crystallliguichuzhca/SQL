@@ -1,0 +1,50 @@
+--In this SQL code, I'm querying a database that's holding Nexflix data to answer questions about the data.
+
+--How many movies titles are there in the database? (movies only, not tv shows)
+SELECT 
+COUNT(*)
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info" 
+WHERE type='Movie';
+-- (^)note: the use of single quotes in WHERE type='Movie'
+-- (^)In PostgreSQL double quotes are part of the syntax for the FROM statement
+
+--When was the most recent batch of tv shows and/or movies added to the database?
+SELECT 
+max(date(date_added))
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info";
+
+--List all the movies and tv shows in alphabetical order.
+SELECT title
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+ORDER BY title asc;
+
+--Who was the director for the movie Bright Star?
+SELECT
+director
+,title
+FROM "CharlotteChaze/BreakIntoTech"."netflix_people" people
+LEFT JOIN "CharlotteChaze/BreakIntoTech"."netflix_titles_info" titles
+ON people.show_id = titles.show_id
+WHERE titles.title = 'Bright Star';
+
+--What is the oldest movie in the database and what year was it made?
+SELECT
+title, release_year
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+WHERE type = 'Movie'
+ORDER BY release_year asc
+LIMIT 2;
+--(^) Note: there are actually 2 movies that came out that year! 
+--(^)You can see the second one by changing LIMIT 1 to LIMIT 2. 
+
+--What is the oldest movie in the database and what year was it made? Using subquery...
+SELECT 
+title, release_year 
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+WHERE type = 'Movie'
+AND release_year <= 
+(SELECT MIN(release_year) 
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+WHERE type = 'Movie'); 
+
+
