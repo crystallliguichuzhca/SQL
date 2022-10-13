@@ -1,0 +1,70 @@
+/*1. Select all columns and rows from the customers table to see what it looks like*/
+SELECT * FROM BIT_DB.customers
+LIMIT 20;
+
+/*2. Select all columns and rows from the JanSales table to see what it looks like*/
+SELECT * FROM BIT_DB.JanSales
+LIMIT 20;
+
+/*3. How many orders were placed in January?*/
+SELECT COUNT(orderID) 
+FROM BIT_DB.JanSales;
+
+/*4. How many of those orders were for an iPhone?*/
+SELECT COUNT(orderID)
+FROM BIT_DB.JanSales
+WHERE Product='iPhone';
+
+/*5. Select the customer account numbers for all the orders that were placed in February.*/
+
+SELECT acctnum
+FROM BIT_DB.customers cust
+INNER JOIN BIT_DB.FebSales Feb
+ON cust.order_id=FEB.orderid;
+
+/*(^)LEFT OUTTER JOIN will output a list of every account number, even if it's not in February*/
+/*(^)INNER JOIN will ONLY create rows if there's matching records of customer account number ONLY in February*/
+
+/*6. Which product was the cheapest one sold in January, and what was the price?*/
+/*For this one, you are going to use the commands distinct and MIN().*/
+/*Using 'SELECT distinct' will remove duplicate rows from your results.*/
+/*The MIN() command will allow you to select the smallest value from the price column.*/
+
+SELECT distinct product, MIN(price) 
+FROM BIT_DB.JanSales Jan 
+GROUP BY product, price
+ORDER BY price ASC LIMIT 1;
+
+/*(^)WITHOUT GROUP BY PRICE it shows you the min price of each product (if they had multiple diff prices)*/
+/*(^)therefore with GROUP BY product and price we get the min price of all products*/
+
+/*7. What is the total revenue for each product sold in January? */
+/*(Revenue can be calculated using the number of products sold and the price of the products).*/
+
+SELECT Product, 
+sum(Quantity)*price AS revenue 
+FROM BIT_DB.JanSales
+GROUP BY Product;
+
+/*(^)we use sum(quantity), because different order IDs ordered the same product in many cases.*/
+/*(^)Now there's only one of each product listed, with the product and the total quantity of each that were sold.*/
+/*(^)We want to take it once step further now and calculate the revenue for each product, */
+/*(^)which would be the the quantity of each product sold * the price of each product. */
+
+/*8. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?*/
+SELECT Product, 
+sum(Quantity), 
+sum(Quantity)*price AS Revenue
+FROM BIT_DB.FebSales
+WHERE location = '548 Lincoln St, Seattle, WA 98101'
+GROUP BY Product;
+
+/*9. How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?*/
+SELECT 
+count(cust.acctnum), 
+avg(quantity*price)
+FROM BIT_DB.FebSales Feb
+LEFT JOIN BIT_DB.customers cust
+ON FEB.orderid=cust.order_id
+WHERE Feb.Quantity>2;
+
