@@ -47,3 +47,9 @@ popularity
 FROM BIT_DB.Spotifydata
 ORDER BY popularity desc
 LIMIT 10;
+
+/*How many artist have more than 2 songs on the top 50 chart*/
+SELECT artist_name, COUNT(artist_name)
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+HAVING COUNT(*)>2;
