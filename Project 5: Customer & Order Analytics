@@ -17,7 +17,7 @@ WHERE Product='iPhone';
 
 /*5. Select the customer account numbers for all the orders that were placed in February.*/
 
-SELECT acctnum
+SELECT cust.acctnum
 FROM BIT_DB.customers cust
 INNER JOIN BIT_DB.FebSales Feb
 ON cust.order_id=FEB.orderid;
@@ -41,8 +41,7 @@ ORDER BY price ASC LIMIT 1;
 /*7. What is the total revenue for each product sold in January? */
 /*(Revenue can be calculated using the number of products sold and the price of the products).*/
 
-SELECT Product, 
-sum(Quantity)*price AS revenue 
+SELECT Product, SUM(Quantity)*price AS Revenue
 FROM BIT_DB.JanSales
 GROUP BY Product;
 
@@ -52,21 +51,17 @@ GROUP BY Product;
 /*(^)which would be the the quantity of each product sold * the price of each product. */
 
 /*8. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?*/
-SELECT Product, 
-sum(Quantity), 
-sum(Quantity)*price AS Revenue
+SELECT Product, sum(Quantity), sum(Quantity)*price AS Revenue
 FROM BIT_DB.FebSales
 WHERE location = '548 Lincoln St, Seattle, WA 98101'
 GROUP BY Product;
 
 /*9. How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?*/
-SELECT 
-count(cust.acctnum), 
-avg(quantity*price)
-FROM BIT_DB.FebSales Feb
+SELECT COUNT(cust.acctnum), avg(Quantity*price) as Average
+FROM BIT_DB.FebSales feb
 LEFT JOIN BIT_DB.customers cust
-ON FEB.orderid=cust.order_id
-WHERE Feb.Quantity>2;
+ON feb.orderID = cust.order_id
+WHERE feb.Quantity > 2;
 
 /*10. List all the products sold in Los Angeles in February, and include how many of each were sold.*/
 SELECT Product, sum(Quantity)
